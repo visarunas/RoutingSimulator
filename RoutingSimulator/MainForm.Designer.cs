@@ -39,14 +39,15 @@
             this.panelGraphics.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelGraphics.Location = new System.Drawing.Point(12, 199);
             this.panelGraphics.Name = "panelGraphics";
-            this.panelGraphics.Size = new System.Drawing.Size(735, 354);
+            this.panelGraphics.Size = new System.Drawing.Size(1073, 443);
             this.panelGraphics.TabIndex = 0;
+            this.panelGraphics.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelGraphics_MouseDown);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 565);
+            this.ClientSize = new System.Drawing.Size(1097, 654);
             this.Controls.Add(this.panelGraphics);
             this.Name = "MainForm";
             this.Text = "Form1";
