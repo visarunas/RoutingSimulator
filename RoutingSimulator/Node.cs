@@ -9,19 +9,16 @@ namespace RoutingSimulator
 {
     public class Node
     {
-        public Node(string name, PictureBox pb)
+        public Node(string name)
         {
             this.Name = name;
-            this.Pb = pb;
         }
 
         public int Id { get; set; }
         public int Weight { get; set; }
-        public List<Node> ConnectedNodes { get; set; }
+        public List<Node> ConnectedNodes { get; set; } = new List<Node>();
 
         public string Name { get; set; }
-
-        public PictureBox Pb { get; set; }
 
     }
 }
