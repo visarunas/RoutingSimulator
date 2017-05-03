@@ -55,7 +55,7 @@
     <Compile Include="NodePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GraphicsController.cs" />
+    <Compile Include="NodeVisualController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">

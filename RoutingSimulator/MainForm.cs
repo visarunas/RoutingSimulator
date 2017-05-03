@@ -14,7 +14,7 @@ namespace RoutingSimulator
     public partial class MainForm : Form
     {
         IList<Node> nodes = new List<Node>();
-        GraphicsController graphicsController;
+        NodeVisualController graphicsController;
 
         
 
@@ -23,7 +23,7 @@ namespace RoutingSimulator
             InitializeComponent();
             panelGraphics.ContextMenuStrip = panelContextMenuStrip;
 
-            this.graphicsController = new GraphicsController(panelGraphics);
+            this.graphicsController = new NodeVisualController(panelGraphics);
 
         }
 
@@ -53,5 +53,18 @@ namespace RoutingSimulator
                 graphicsController.RemoveNodeGraphics(panelGraphics.PointToClient(MousePosition));
             }
         }
+
+        private void linkRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            graphicsController.moveMode = false;
+        }
+
+        private void moveRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            graphicsController.moveMode = true;
+
+        }
+
+
     }
 }

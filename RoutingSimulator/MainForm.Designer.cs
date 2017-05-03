@@ -33,6 +33,8 @@
             this.panelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveRadioButton = new System.Windows.Forms.RadioButton();
+            this.linkRadioButton = new System.Windows.Forms.RadioButton();
             this.panelContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,31 +56,59 @@
             this.addNodeToolStripMenuItem,
             this.removeNodeToolStripMenuItem});
             this.panelContextMenuStrip.Name = "panelContextMenuStrip";
-            this.panelContextMenuStrip.Size = new System.Drawing.Size(153, 70);
+            this.panelContextMenuStrip.Size = new System.Drawing.Size(150, 48);
             this.panelContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.panelContextMenuStrip_ItemClicked);
             // 
             // addNodeToolStripMenuItem
             // 
             this.addNodeToolStripMenuItem.Name = "addNodeToolStripMenuItem";
-            this.addNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addNodeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.addNodeToolStripMenuItem.Text = "Add Node";
             // 
             // removeNodeToolStripMenuItem
             // 
             this.removeNodeToolStripMenuItem.Name = "removeNodeToolStripMenuItem";
-            this.removeNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.removeNodeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.removeNodeToolStripMenuItem.Text = "Remove Node";
+            // 
+            // moveRadioButton
+            // 
+            this.moveRadioButton.AutoSize = true;
+            this.moveRadioButton.Checked = true;
+            this.moveRadioButton.Location = new System.Drawing.Point(169, 161);
+            this.moveRadioButton.Name = "moveRadioButton";
+            this.moveRadioButton.Size = new System.Drawing.Size(82, 17);
+            this.moveRadioButton.TabIndex = 1;
+            this.moveRadioButton.TabStop = true;
+            this.moveRadioButton.Text = "Move Mode";
+            this.moveRadioButton.UseVisualStyleBackColor = true;
+            this.moveRadioButton.CheckedChanged += new System.EventHandler(this.moveRadioButton_CheckedChanged);
+            // 
+            // linkRadioButton
+            // 
+            this.linkRadioButton.AutoSize = true;
+            this.linkRadioButton.Location = new System.Drawing.Point(316, 161);
+            this.linkRadioButton.Name = "linkRadioButton";
+            this.linkRadioButton.Size = new System.Drawing.Size(75, 17);
+            this.linkRadioButton.TabIndex = 2;
+            this.linkRadioButton.TabStop = true;
+            this.linkRadioButton.Text = "Link Mode";
+            this.linkRadioButton.UseVisualStyleBackColor = true;
+            this.linkRadioButton.CheckedChanged += new System.EventHandler(this.linkRadioButton_CheckedChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 654);
+            this.Controls.Add(this.linkRadioButton);
+            this.Controls.Add(this.moveRadioButton);
             this.Controls.Add(this.panelGraphics);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.panelContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -88,6 +118,8 @@
         private System.Windows.Forms.ContextMenuStrip panelContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeNodeToolStripMenuItem;
+        private System.Windows.Forms.RadioButton moveRadioButton;
+        private System.Windows.Forms.RadioButton linkRadioButton;
     }
 }
 
