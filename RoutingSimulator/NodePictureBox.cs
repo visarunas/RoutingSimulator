@@ -10,14 +10,14 @@ namespace RoutingSimulator
 {
     public class NodePictureBox : PictureBox
     {
-        private Node node;
+        public Node node;
+
 
         public NodePictureBox(Node node, Point location)
         {
             this.node = node;
             this.Location = location;
             this.Image = Image.FromFile(Properties.Resources.NodeImage);
-
 
         }
 

@@ -21,6 +21,7 @@ namespace RoutingSimulator
         public MainForm()
         {
             InitializeComponent();
+            panelGraphics.ContextMenuStrip = panelContextMenuStrip;
 
             this.graphicsController = new GraphicsController(panelGraphics);
 
@@ -30,13 +31,27 @@ namespace RoutingSimulator
         {
             if (e.Button == MouseButtons.Right)
             {
-                graphicsController.AddNode(new Node("A"), e.Location);
+
                 
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+
             }
 
         }
 
+        private void panelContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
-
+            if (e.ClickedItem.Text == "Add Node")
+            {
+                graphicsController.AddNodeGraphics(new Node("A"), panelGraphics.PointToClient(MousePosition));
+            }
+            if (e.ClickedItem.Text == "Remove Node")
+            {
+                graphicsController.RemoveNodeGraphics(panelGraphics.PointToClient(MousePosition));
+            }
+        }
     }
 }

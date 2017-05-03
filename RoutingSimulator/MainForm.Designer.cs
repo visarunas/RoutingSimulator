@@ -28,7 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelGraphics = new System.Windows.Forms.Panel();
+            this.panelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelGraphics
@@ -43,6 +48,27 @@
             this.panelGraphics.TabIndex = 0;
             this.panelGraphics.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelGraphics_MouseDown);
             // 
+            // panelContextMenuStrip
+            // 
+            this.panelContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNodeToolStripMenuItem,
+            this.removeNodeToolStripMenuItem});
+            this.panelContextMenuStrip.Name = "panelContextMenuStrip";
+            this.panelContextMenuStrip.Size = new System.Drawing.Size(153, 70);
+            this.panelContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.panelContextMenuStrip_ItemClicked);
+            // 
+            // addNodeToolStripMenuItem
+            // 
+            this.addNodeToolStripMenuItem.Name = "addNodeToolStripMenuItem";
+            this.addNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addNodeToolStripMenuItem.Text = "Add Node";
+            // 
+            // removeNodeToolStripMenuItem
+            // 
+            this.removeNodeToolStripMenuItem.Name = "removeNodeToolStripMenuItem";
+            this.removeNodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.removeNodeToolStripMenuItem.Text = "Remove Node";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -51,6 +77,7 @@
             this.Controls.Add(this.panelGraphics);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.panelContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -58,6 +85,9 @@
         #endregion
 
         private System.Windows.Forms.Panel panelGraphics;
+        private System.Windows.Forms.ContextMenuStrip panelContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addNodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeNodeToolStripMenuItem;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RoutingSimulator
@@ -7,20 +8,21 @@ namespace RoutingSimulator
     {
         const int nodeSize = 64;
 
-        private Panel panelGraphics;
+        private Control panelGraphics;
 
         private bool moving;
         private Point startLocation;
 
-        public GraphicsController(Panel panelGraphics)
+        public GraphicsController(Control panelGraphics)
         {
             this.panelGraphics = panelGraphics;
         }
 
-        public void AddNode(Node node, Point location)
+        public void AddNodeGraphics(Node node, Point location)
         {
 
             NodePictureBox pb = new NodePictureBox(node, new Point(location.X - nodeSize / 2, location.Y - nodeSize / 2));
+            pb.SizeMode = PictureBoxSizeMode.AutoSize;
             panelGraphics.Controls.Add(pb);
 
             pb.MouseDown += new MouseEventHandler(NodePictureBox_MouseDown);
@@ -49,6 +51,11 @@ namespace RoutingSimulator
         {
             moving = false;
 
+        }
+
+        internal void RemoveNodeGraphics(Point point)
+        {
+            throw new NotImplementedException();
         }
 
         private void NodePictureBox_MouseMove(object sender, MouseEventArgs e)
