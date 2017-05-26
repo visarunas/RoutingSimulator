@@ -17,8 +17,7 @@ namespace RoutingSimulator
         private Point startLocation;
 
         private NodePictureBox selectedNode1, selectedNode2;
-        private List<NodePictureBox> node1List = new List<NodePictureBox>();
-        private List<NodePictureBox> node2List = new List<NodePictureBox>();
+        private List<Edge<NodePictureBox>> edgeList = new List<Edge<NodePictureBox>>();
 
         public NodeVisualController(Control panelGraphics)
         {
@@ -37,7 +36,7 @@ namespace RoutingSimulator
             pb.MouseUp += new MouseEventHandler(NodePictureBox_MouseUp);
             pb.MouseMove += new MouseEventHandler(NodePictureBox_MouseMove);
 
-            panelGraphics_Paint(this, null);
+            panelGraphics.Refresh();
 
         }
 
@@ -87,8 +86,7 @@ namespace RoutingSimulator
 
         public void LinkNodes(NodePictureBox node1, NodePictureBox node2)
         {
-            node1List.Add(node1);
-            node2List.Add(node2);
+            edgeList.Add(new Edge<NodePictureBox>(node1, node2));
             panelGraphics.Invalidate();
         }
 
@@ -98,9 +96,32 @@ namespace RoutingSimulator
 
         }
 
-        internal void RemoveNodeGraphics(Point point)
+        public void RemoveNodeGraphics(Point point)
         {
-            throw new NotImplementedException();
+            point.X -= nodeSize / 2;
+            point.Y -= nodeSize / 2;
+
+            foreach (Control control in panelGraphics.Controls)
+            {
+                if (control.Bounds.Contains(point))
+                {
+                    for(int i = 0; i < edgeList.Count; i++)
+                    {
+                        if (edgeList[i].End == control || edgeList[i].Start == control)
+                        {
+                            edgeList.RemoveAt(i);
+                            i--;
+                        }
+                    }
+
+                    panelGraphics.Controls.Remove(control);
+                    panelGraphics.Refresh();
+
+                    return;
+                }
+          
+            }
+            
         }
 
         private void NodePictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -121,15 +142,16 @@ namespace RoutingSimulator
 
             using (var pen = new Pen(Color.Red, 4))
             {
-                for (int i = 0; i < node1List.Count; i++)
+                for (int i = 0; i < edgeList.Count; i++)
                 {
 
                     e.Graphics.DrawLine(pen, 
-                        node1List[i].Location.X + nodeSize / 2,
-                        node1List[i].Location.Y + nodeSize / 2,
-                        node2List[i].Location.X + nodeSize / 2,
-                        node2List[i].Location.Y + nodeSize / 2);
+                        edgeList[i].Start.Location.X + nodeSize / 2,
+                        edgeList[i].Start.Location.Y + nodeSize / 2,
+                        edgeList[i].End.Location.X + nodeSize / 2,
+                        edgeList[i].End.Location.Y + nodeSize / 2);
                 }
+                
             }
 
             
