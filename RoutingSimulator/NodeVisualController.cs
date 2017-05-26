@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace RoutingSimulator
 {
     public class NodeVisualController
     {
         const int nodeSize = 64;
-        public bool moveMode { get; set;} = true;
 
         private Control panelGraphics;
 
@@ -49,11 +49,9 @@ namespace RoutingSimulator
 
             if (e.Button == MouseButtons.Left)
             {
-                if (moveMode)
-                {
-                    moving = true;
-                }
-                else
+                moving = true;
+
+                if (NodePictureBox.ModifierKeys.HasFlag(Keys.Control))
                 {
                     if (selectedNode1 == null)
                     {
@@ -91,7 +89,7 @@ namespace RoutingSimulator
         {
             node1List.Add(node1);
             node2List.Add(node2);
-            panelGraphics.Refresh();
+            panelGraphics.Invalidate();
         }
 
         private void NodePictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -113,7 +111,7 @@ namespace RoutingSimulator
                 pb.Left += e.Location.X - startLocation.X - nodeSize / 2;
                 pb.Top += e.Location.Y - startLocation.Y - nodeSize / 2;
 
-                panelGraphics.Refresh();
+                panelGraphics.Invalidate();
             }
         }
 
@@ -121,13 +119,16 @@ namespace RoutingSimulator
         private void panelGraphics_Paint(object sender, PaintEventArgs e)
         {
 
-            using (var pen = new Pen(Color.Blue, 4))
+            using (var pen = new Pen(Color.Red, 4))
             {
                 for (int i = 0; i < node1List.Count; i++)
                 {
 
-                    e.Graphics.DrawLine(pen, node1List[i].Location, node2List[i].Location);
-                    Debug.WriteLine(node1List[i].Location.ToString() + node2List[i].Location.ToString());
+                    e.Graphics.DrawLine(pen, 
+                        node1List[i].Location.X + nodeSize / 2,
+                        node1List[i].Location.Y + nodeSize / 2,
+                        node2List[i].Location.X + nodeSize / 2,
+                        node2List[i].Location.Y + nodeSize / 2);
                 }
             }
 

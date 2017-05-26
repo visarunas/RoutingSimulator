@@ -54,17 +54,6 @@ namespace RoutingSimulator
             }
         }
 
-        private void linkRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            graphicsController.moveMode = false;
-        }
-
-        private void moveRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            graphicsController.moveMode = true;
-
-        }
-
 
     }
 }
