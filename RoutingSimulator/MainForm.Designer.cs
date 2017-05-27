@@ -37,7 +37,11 @@
             this.buttonSend = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.comboBoxSender = new System.Windows.Forms.ComboBox();
+            this.dataGridViewTable = new System.Windows.Forms.DataGridView();
+            this.Destination = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NextNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelContextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).BeginInit();
             this.SuspendLayout();
             // 
             // panelGraphics
@@ -109,11 +113,39 @@
             this.comboBoxSender.Size = new System.Drawing.Size(151, 21);
             this.comboBoxSender.TabIndex = 6;
             // 
+            // dataGridViewTable
+            // 
+            this.dataGridViewTable.AllowUserToAddRows = false;
+            this.dataGridViewTable.AllowUserToDeleteRows = false;
+            this.dataGridViewTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Destination,
+            this.NextNode});
+            this.dataGridViewTable.Location = new System.Drawing.Point(592, 12);
+            this.dataGridViewTable.Name = "dataGridViewTable";
+            this.dataGridViewTable.ReadOnly = true;
+            this.dataGridViewTable.Size = new System.Drawing.Size(246, 163);
+            this.dataGridViewTable.TabIndex = 7;
+            this.dataGridViewTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTable_CellContentClick);
+            // 
+            // Destination
+            // 
+            this.Destination.HeaderText = "Destination";
+            this.Destination.Name = "Destination";
+            this.Destination.ReadOnly = true;
+            // 
+            // NextNode
+            // 
+            this.NextNode.HeaderText = "Next Node";
+            this.NextNode.Name = "NextNode";
+            this.NextNode.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 654);
+            this.Controls.Add(this.dataGridViewTable);
             this.Controls.Add(this.comboBoxSender);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonSend);
@@ -122,6 +154,7 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.panelContextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -136,6 +169,9 @@
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.ComboBox comboBoxSender;
+        private System.Windows.Forms.DataGridView dataGridViewTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Destination;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NextNode;
     }
 }
 

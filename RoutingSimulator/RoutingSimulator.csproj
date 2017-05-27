@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alphabet.cs" />
+    <Compile Include="JoinReply.cs" />
+    <Compile Include="RoutingEntry.cs" />
     <Compile Include="VisualEdge.cs" />
     <Compile Include="JoinQuery.cs" />
     <Compile Include="MainForm.cs">

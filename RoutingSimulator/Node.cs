@@ -9,6 +9,8 @@ namespace RoutingSimulator
 {
     public class Node
     {
+        const int sendDelay = 1000;
+
         public Node(string name)
         {
             this.Name = name;
@@ -20,9 +22,12 @@ namespace RoutingSimulator
         public bool Receiver { get; set; } = false;
 
         public List<JoinQuery> messageCache = new List<JoinQuery>();
+        public List<RoutingEntry> routingTable = new List<RoutingEntry>();
 
         public void ReceiveJoinQuery(JoinQuery joinQuery)
         {
+            Console.WriteLine("JoinQuery received at " + this.Name);
+
             foreach(var jq in messageCache)
             {
                 if (jq.Source == joinQuery.Source)
@@ -36,34 +41,55 @@ namespace RoutingSimulator
             if (Receiver)
             {
                 SendJoinReply(joinQuery);
-                return;
             }
 
             joinQuery.HopCount++;
-            joinQuery.LastHop = this.Name;
 
-            SendJoinQuery();
+            Task.Delay(sendDelay).ContinueWith(t => ContinueJoinQuery(joinQuery));
+            
         }
 
         public void SendJoinReply(JoinQuery joinQuery)
         {
+            var reply = new JoinReply();
+        }
+
+        public void ContinueJoinQuery(JoinQuery receivedJoinQuery)
+        {
+            var jq = new JoinQuery(receivedJoinQuery)
+            {
+                LastHop = this.Name
+            };
+
+            foreach (var node in this.ConnectedNodes)
+            {
+                if (node.Name != receivedJoinQuery.Source && node.Name != receivedJoinQuery.LastHop)
+                {
+                    node.ReceiveJoinQuery(jq);
+                }
+                
+            }
 
         }
 
         public void SendJoinQuery()
         {
-            var joinQuery = new JoinQuery(this);
-
             foreach (var node in this.ConnectedNodes)
             {
-                node.ReceiveJoinQuery(joinQuery);
+                node.ReceiveJoinQuery(new JoinQuery(this));
             }
 
         }
 
         public void UpdateTable(JoinQuery joinQuery)
         {
+            var entry = new RoutingEntry()
+            {
+                Destination = joinQuery.Source,
+                NextNode = joinQuery.LastHop
+            };
 
+            routingTable.Add(entry);
         }
     }
 }

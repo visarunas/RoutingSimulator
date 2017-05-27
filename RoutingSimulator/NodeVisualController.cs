@@ -12,6 +12,7 @@ namespace RoutingSimulator
         const int nodeSize = 64;
 
         private Control panelGraphics;
+        private MainForm main;
 
         private bool moving;
         private Point startLocation;
@@ -20,9 +21,10 @@ namespace RoutingSimulator
         private List<VisualEdge<NodePictureBox>> edgeList = new List<VisualEdge<NodePictureBox>>();
         private NodeController nodeController = new NodeController();
 
-        public NodeVisualController(Control panelGraphics)
+        public NodeVisualController(MainForm main, Control panelGraphics)
         {
             this.panelGraphics = panelGraphics;
+            this.main = main;
             this.panelGraphics.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGraphics_Paint);
         }
 
@@ -36,6 +38,8 @@ namespace RoutingSimulator
             pb.MouseDown += new MouseEventHandler(NodePictureBox_MouseDown);
             pb.MouseUp += new MouseEventHandler(NodePictureBox_MouseUp);
             pb.MouseMove += new MouseEventHandler(NodePictureBox_MouseMove);
+
+            pb.MouseDown += new MouseEventHandler(main.NodePictureBox_MouseDown);
 
             panelGraphics.Refresh();
 
@@ -83,6 +87,11 @@ namespace RoutingSimulator
             {
 
             }
+        }
+
+        public void SendJoinQuery(Node node, NodeController nodeController)
+        {
+            
         }
 
         public void LinkNodes(NodePictureBox node1, NodePictureBox node2)

@@ -45,5 +45,15 @@ namespace RoutingSimulator
         {
             nodes.Remove(node);
         }
+
+        public void Reset()
+        {
+            foreach(var node in nodes)
+            {
+                node.messageCache.Clear();
+                node.routingTable.Clear();
+                node.Receiver = false;
+            }
+        }
     }
 }

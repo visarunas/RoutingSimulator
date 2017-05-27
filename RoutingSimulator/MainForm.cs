@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,14 +20,13 @@ namespace RoutingSimulator
 
         private Alphabet alphabet = new Alphabet();
 
-        
 
         public MainForm()
         {
             InitializeComponent();
             panelGraphics.ContextMenuStrip = panelContextMenuStrip;
 
-            this.graphicsController = new NodeVisualController(panelGraphics);
+            this.graphicsController = new NodeVisualController(this, panelGraphics);
 
         }
 
@@ -83,6 +83,7 @@ namespace RoutingSimulator
         {
             try
             {
+                nodeController.Reset();
                 foreach(var selection in checkedListBoxReceiver.CheckedItems)
                 {
                     var receiver = nodeController.nodes.Find(x => x.Name == selection.ToString());
@@ -91,7 +92,11 @@ namespace RoutingSimulator
 
                 var node = nodeController.nodes.Find(x => x.Name == (string)comboBoxSender.SelectedItem);
 
+                graphicsController.SendJoinQuery(node, nodeController);
+                
+
                 nodeController.SendJoinQuery(node);
+           
 
 
             }
@@ -102,7 +107,25 @@ namespace RoutingSimulator
 
         }
 
+        public void NodePictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            NodePictureBox node = sender as NodePictureBox;
+
+            dataGridViewTable.Rows.Clear();
+
+            foreach(var entry in node.node.routingTable)
+            {
+                dataGridViewTable.Rows.Add(entry.Destination, entry.NextNode);
+            }
+
+        }
+
         private void buttonStop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

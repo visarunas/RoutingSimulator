@@ -20,6 +20,13 @@ namespace RoutingSimulator
             this.LastHop = sender.Name;
         }
 
+        public JoinQuery(JoinQuery jq)
+        {
+            this.Source = jq.Source;
+            this.LastHop = jq.LastHop;
+            this.HopCount = jq.HopCount;
+        }
+
 
     }
 }
