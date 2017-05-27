@@ -17,7 +17,8 @@ namespace RoutingSimulator
         private Point startLocation;
 
         private NodePictureBox selectedNode1, selectedNode2;
-        private List<Edge<NodePictureBox>> edgeList = new List<Edge<NodePictureBox>>();
+        private List<VisualEdge<NodePictureBox>> edgeList = new List<VisualEdge<NodePictureBox>>();
+        private NodeController nodeController = new NodeController();
 
         public NodeVisualController(Control panelGraphics)
         {
@@ -86,7 +87,11 @@ namespace RoutingSimulator
 
         public void LinkNodes(NodePictureBox node1, NodePictureBox node2)
         {
-            edgeList.Add(new Edge<NodePictureBox>(node1, node2));
+            edgeList.Add(new VisualEdge<NodePictureBox>(node1, node2));
+
+            nodeController.LinkNodes(node1.node, node2.node);
+
+
             panelGraphics.Invalidate();
         }
 
@@ -96,12 +101,12 @@ namespace RoutingSimulator
 
         }
 
-        public void RemoveNodeGraphics(Point point)
+        public Node RemoveNodeGraphics(Point point)
         {
             point.X -= nodeSize / 2;
             point.Y -= nodeSize / 2;
 
-            foreach (Control control in panelGraphics.Controls)
+            foreach (NodePictureBox control in panelGraphics.Controls)
             {
                 if (control.Bounds.Contains(point))
                 {
@@ -113,14 +118,16 @@ namespace RoutingSimulator
                             i--;
                         }
                     }
+                    var removedNode = control.node;
 
                     panelGraphics.Controls.Remove(control);
                     panelGraphics.Refresh();
 
-                    return;
+                    return removedNode;
                 }
           
             }
+            throw new Exception();
             
         }
 

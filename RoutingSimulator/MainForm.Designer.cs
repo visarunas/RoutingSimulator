@@ -33,6 +33,10 @@
             this.panelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkedListBoxReceiver = new System.Windows.Forms.CheckedListBox();
+            this.buttonSend = new System.Windows.Forms.Button();
+            this.buttonStop = new System.Windows.Forms.Button();
+            this.comboBoxSender = new System.Windows.Forms.ComboBox();
             this.panelContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,11 +73,51 @@
             this.removeNodeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.removeNodeToolStripMenuItem.Text = "Remove Node";
             // 
+            // checkedListBoxReceiver
+            // 
+            this.checkedListBoxReceiver.FormattingEnabled = true;
+            this.checkedListBoxReceiver.Location = new System.Drawing.Point(333, 49);
+            this.checkedListBoxReceiver.Name = "checkedListBoxReceiver";
+            this.checkedListBoxReceiver.Size = new System.Drawing.Size(120, 94);
+            this.checkedListBoxReceiver.TabIndex = 3;
+            // 
+            // buttonSend
+            // 
+            this.buttonSend.Location = new System.Drawing.Point(168, 161);
+            this.buttonSend.Name = "buttonSend";
+            this.buttonSend.Size = new System.Drawing.Size(75, 23);
+            this.buttonSend.TabIndex = 4;
+            this.buttonSend.Text = "Start";
+            this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
+            // 
+            // buttonStop
+            // 
+            this.buttonStop.Location = new System.Drawing.Point(349, 161);
+            this.buttonStop.Name = "buttonStop";
+            this.buttonStop.Size = new System.Drawing.Size(75, 23);
+            this.buttonStop.TabIndex = 5;
+            this.buttonStop.Text = "Stop";
+            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+            // 
+            // comboBoxSender
+            // 
+            this.comboBoxSender.FormattingEnabled = true;
+            this.comboBoxSender.Location = new System.Drawing.Point(140, 84);
+            this.comboBoxSender.Name = "comboBoxSender";
+            this.comboBoxSender.Size = new System.Drawing.Size(151, 21);
+            this.comboBoxSender.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 654);
+            this.Controls.Add(this.comboBoxSender);
+            this.Controls.Add(this.buttonStop);
+            this.Controls.Add(this.buttonSend);
+            this.Controls.Add(this.checkedListBoxReceiver);
             this.Controls.Add(this.panelGraphics);
             this.Name = "MainForm";
             this.Text = "Form1";
@@ -88,6 +132,10 @@
         private System.Windows.Forms.ContextMenuStrip panelContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeNodeToolStripMenuItem;
+        private System.Windows.Forms.CheckedListBox checkedListBoxReceiver;
+        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.ComboBox comboBoxSender;
     }
 }
 

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace RoutingSimulator
 {
-    public class Edge<T>
+    public class VisualEdge<T>
     {
         public T Start { get; set; }
         public T End { get; set; }
 
-        public Edge(T start, T end)
+        public VisualEdge(T start, T end)
         {
             this.Start = start;
             this.End = end;
