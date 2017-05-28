@@ -20,13 +20,14 @@ namespace RoutingSimulator
 
         public string Name { get; set; }
         public bool Receiver { get; set; } = false;
+        public bool FG_FLAG = false;
 
         public List<JoinQuery> messageCache = new List<JoinQuery>();
         public List<RoutingEntry> routingTable = new List<RoutingEntry>();
 
         public void ReceiveJoinQuery(JoinQuery joinQuery)
         {
-            Console.WriteLine("JoinQuery received at " + this.Name);
+            Console.WriteLine(joinQuery.LastHop + " > " + this.Name + " JQ");
 
             foreach(var jq in messageCache)
             {
@@ -51,7 +52,40 @@ namespace RoutingSimulator
 
         public void SendJoinReply(JoinQuery joinQuery)
         {
-            var reply = new JoinReply();
+            var reply = new JoinReply()
+            {
+                Source = joinQuery.Source,
+                NextHop = joinQuery.LastHop
+            };
+
+            var node = ConnectedNodes.Find(x => x.Name == joinQuery.LastHop);
+            Task.Delay(sendDelay).ContinueWith(t => node.ReceiveJoinReply(reply));
+        }
+
+        public void ReceiveJoinReply(JoinReply reply)
+        {
+            if (this.Name == reply.Source)
+            {
+                Console.WriteLine("Source received JR");
+                return;
+            }
+
+            Console.WriteLine(this.Name + " Received" + " JR");
+            if (reply.NextHop == this.Name)
+            {
+                this.FG_FLAG = true;
+
+                var routingEntry = routingTable.Find(x => x.Destination == reply.Source);
+
+                var jr = new JoinReply()
+                {
+                    Source = reply.Source,
+                    NextHop = routingEntry.NextNode,
+                };
+
+                var node = ConnectedNodes.Find(x => x.Name == routingEntry.NextNode);
+                Task.Delay(sendDelay).ContinueWith(t => node.ReceiveJoinReply(reply));
+            }
         }
 
         public void ContinueJoinQuery(JoinQuery receivedJoinQuery)
@@ -74,6 +108,7 @@ namespace RoutingSimulator
 
         public void SendJoinQuery()
         {
+            Console.WriteLine("---------");
             foreach (var node in this.ConnectedNodes)
             {
                 node.ReceiveJoinQuery(new JoinQuery(this));

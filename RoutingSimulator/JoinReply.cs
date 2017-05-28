@@ -1,7 +1,10 @@
 ﻿namespace RoutingSimulator
 {
-    internal class JoinReply
+    public class JoinReply
     {
+        public string Source;
+        public string NextHop;
+
         public JoinReply()
         {
         }
