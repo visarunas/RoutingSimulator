@@ -11,6 +11,13 @@ namespace RoutingSimulator
         private Alphabet alphabet = new Alphabet();
         public List<Node> nodes = new List<Node>();
 
+        NodeVisualController visual;
+
+        public NodeController(NodeVisualController ctrl)
+        {
+            visual = ctrl;
+        }
+
         public void SendJoinQuery(Node sender)
         {
             sender.SendJoinQuery();
@@ -35,7 +42,7 @@ namespace RoutingSimulator
 
         public Node AddNewNode()
         {
-            var node = new Node(alphabet.GetNextLetter());
+            var node = new Node(alphabet.GetNextLetter(), visual);
             nodes.Add(node);
 
             return node;

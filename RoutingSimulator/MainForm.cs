@@ -16,7 +16,7 @@ namespace RoutingSimulator
     {
         
         NodeVisualController graphicsController;
-        NodeController nodeController = new NodeController();
+        NodeController nodeController;
 
         private Alphabet alphabet = new Alphabet();
 
@@ -25,8 +25,10 @@ namespace RoutingSimulator
         {
             InitializeComponent();
             panelGraphics.ContextMenuStrip = panelContextMenuStrip;
+            
 
             this.graphicsController = new NodeVisualController(this, panelGraphics);
+            nodeController = new NodeController(graphicsController);
 
         }
 
@@ -84,6 +86,11 @@ namespace RoutingSimulator
             try
             {
                 nodeController.Reset();
+                foreach(NodePictureBox pb in panelGraphics.Controls)
+                {
+                    pb.Image = Image.FromFile(Properties.Resources.NodeImage);
+                }
+
                 foreach(var selection in checkedListBoxReceiver.CheckedItems)
                 {
                     var receiver = nodeController.nodes.Find(x => x.Name == selection.ToString());
@@ -91,8 +98,6 @@ namespace RoutingSimulator
                 }
 
                 var node = nodeController.nodes.Find(x => x.Name == (string)comboBoxSender.SelectedItem);
-
-                graphicsController.SendJoinQuery(node, nodeController);
                 
 
                 nodeController.SendJoinQuery(node);

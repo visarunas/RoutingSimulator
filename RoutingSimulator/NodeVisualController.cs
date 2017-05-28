@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -9,6 +10,7 @@ namespace RoutingSimulator
 {
     public class NodeVisualController
     {
+
         const int nodeSize = 64;
 
         private Control panelGraphics;
@@ -19,13 +21,14 @@ namespace RoutingSimulator
 
         private NodePictureBox selectedNode1, selectedNode2;
         private List<VisualEdge<NodePictureBox>> edgeList = new List<VisualEdge<NodePictureBox>>();
-        private NodeController nodeController = new NodeController();
+        private NodeController nodeController;
 
         public NodeVisualController(MainForm main, Control panelGraphics)
         {
             this.panelGraphics = panelGraphics;
             this.main = main;
             this.panelGraphics.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGraphics_Paint);
+            nodeController = new NodeController(this);
         }
 
         public void AddNodeGraphics(Node node, Point location)
@@ -89,9 +92,20 @@ namespace RoutingSimulator
             }
         }
 
-        public void SendJoinQuery(Node node, NodeController nodeController)
+        public void SendPacket(Node from, int time)
         {
+            NodePictureBox fromVisual = null;
             
+            foreach (NodePictureBox control in panelGraphics.Controls)
+            {
+                if(control.node == from)
+                {
+                    fromVisual = control;
+                }
+            }
+
+            //fromVisual.Image = Image.FromFile(Properties.Resources.MailImage);
+
         }
 
         public void LinkNodes(NodePictureBox node1, NodePictureBox node2)

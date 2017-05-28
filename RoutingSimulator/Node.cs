@@ -9,11 +9,12 @@ namespace RoutingSimulator
 {
     public class Node
     {
-        const int sendDelay = 1000;
+        const int sendDelay = 200;
 
-        public Node(string name)
+        public Node(string name, NodeVisualController visual)
         {
             this.Name = name;
+            this.visual = visual;
         }
 
         public List<Node> ConnectedNodes { get; set; } = new List<Node>();
@@ -24,6 +25,7 @@ namespace RoutingSimulator
 
         public List<JoinQuery> messageCache = new List<JoinQuery>();
         public List<RoutingEntry> routingTable = new List<RoutingEntry>();
+        private NodeVisualController visual;
 
         public void ReceiveJoinQuery(JoinQuery joinQuery)
         {
@@ -46,6 +48,8 @@ namespace RoutingSimulator
 
             joinQuery.HopCount++;
 
+            
+
             Task.Delay(sendDelay).ContinueWith(t => ContinueJoinQuery(joinQuery));
             
         }
@@ -59,6 +63,7 @@ namespace RoutingSimulator
             };
 
             var node = ConnectedNodes.Find(x => x.Name == joinQuery.LastHop);
+            
             Task.Delay(sendDelay).ContinueWith(t => node.ReceiveJoinReply(reply));
         }
 
@@ -67,6 +72,8 @@ namespace RoutingSimulator
             if (this.Name == reply.Source)
             {
                 Console.WriteLine("Source received JR");
+                Task.Delay(sendDelay + 1300).ContinueWith(t => this.SendPacket(null));
+                //this.SendPacket(null);
                 return;
             }
 
@@ -112,6 +119,7 @@ namespace RoutingSimulator
             foreach (var node in this.ConnectedNodes)
             {
                 node.ReceiveJoinQuery(new JoinQuery(this));
+                //visual.SendPacket(this, node, sendDelay);
             }
 
         }
@@ -125,6 +133,31 @@ namespace RoutingSimulator
             };
 
             routingTable.Add(entry);
+        }
+
+        public void SendPacket(Node sender)
+        {
+            foreach (var node in this.ConnectedNodes)
+            {
+                if (sender != node)
+                {
+                    Console.WriteLine("Packet sending from " + this.Name + " to " + node.Name);
+
+                    node.ReceivePacket(this);
+                }
+                
+            }
+            
+        }
+
+        public void ReceivePacket(Node sender)
+        {
+            //visual.SendPacket(this, sendDelay);
+            if (this.FG_FLAG)
+            {
+                Task.Delay(sendDelay + 300).ContinueWith(t => this.SendPacket(sender));
+                //SendPacket();
+            }
         }
     }
 }

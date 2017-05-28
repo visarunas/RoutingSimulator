@@ -61,6 +61,15 @@ namespace RoutingSimulator.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mail.png.
+        /// </summary>
+        internal static string MailImage {
+            get {
+                return ResourceManager.GetString("MailImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to node.png.
         /// </summary>
         internal static string NodeImage {
