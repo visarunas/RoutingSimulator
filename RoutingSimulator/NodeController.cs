@@ -57,10 +57,19 @@ namespace RoutingSimulator
         {
             foreach(var node in nodes)
             {
-                //node.FG_FLAG = false;
+                node.FG_FLAG = false;
                 //node.messageCache.Clear();
                 //node.routingTable.Clear();
-                //node.Receiver = false;
+                node.Receiver = false;
+            }
+        }
+
+        public void ResetReceivers()
+        {
+            foreach (var node in nodes)
+            {
+
+                node.Receiver = false;
             }
         }
 

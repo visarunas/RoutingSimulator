@@ -22,6 +22,7 @@ namespace RoutingSimulator
         private NodePictureBox selectedNode1, selectedNode2;
         private List<VisualEdge<NodePictureBox>> edgeList = new List<VisualEdge<NodePictureBox>>();
         private NodeController nodeController;
+        public bool connectionCheckEnabled = true;
 
         public NodeVisualController(MainForm main, Control panelGraphics)
         {
@@ -211,13 +212,16 @@ namespace RoutingSimulator
                 }
                 pb.Refresh();
             }
-            panelGraphics.Refresh();
+            //panelGraphics.Refresh();
 
         }
 
         private void panelGraphics_Paint(object sender, PaintEventArgs e)
         {
-            
+            if (this.connectionCheckEnabled)
+            {
+                CheckConnection();
+            }
 
             using (var pen = new Pen(Color.Red, 4))
             {

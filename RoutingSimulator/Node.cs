@@ -26,6 +26,7 @@ namespace RoutingSimulator
 
         public List<JoinQuery> messageCache = new List<JoinQuery>();
         public List<RoutingEntry> routingTable = new List<RoutingEntry>();
+        public List<Packet> packetCache = new List<Packet>();
         private NodeVisualController visual;
 
         public void ReceiveJoinQuery(JoinQuery joinQuery)
@@ -34,11 +35,11 @@ namespace RoutingSimulator
             {
                 if (jq.Source == joinQuery.Source && jq.Sequence >= joinQuery.Sequence)
                 {
-                    Console.WriteLine(joinQuery.LastHop + " > " + this.Name + " JQ duplicate = Dropped");
+                    Console.WriteLine(this.Name + " received duplicate JQ from " + joinQuery.LastHop);
                     return;
                 }
             }
-            Console.WriteLine(joinQuery.LastHop + " > " + this.Name + " JQ");
+            Console.WriteLine(this.Name + " received JQ from " + joinQuery.LastHop);
 
             messageCache.Add(joinQuery);
             UpdateTable(joinQuery);
@@ -64,6 +65,8 @@ namespace RoutingSimulator
                 NextHop = joinQuery.LastHop
             };
 
+            Console.WriteLine(this.Name + " transmitting JR");
+
             foreach(Node node in ConnectedNodes)
             {
                 Task.Delay(sendDelay).ContinueWith(t => node.ReceiveJoinReply(reply));
@@ -81,11 +84,10 @@ namespace RoutingSimulator
                 //this.SendPacket(null);
                 return;
             }
-
            
             if (reply.NextHop == this.Name)
             {
-                Console.WriteLine(this.Name + " Received" + " JR");
+                Console.WriteLine(this.Name + " received JR");
                 this.FG_FLAG = true;
 
                 var routingEntry = routingTable.Find(x => x.Destination == reply.Source);
@@ -98,7 +100,7 @@ namespace RoutingSimulator
 
                 foreach(var node in ConnectedNodes)
                 {
-                    Task.Delay(sendDelay).ContinueWith(t => node.ReceiveJoinReply(reply));
+                    Task.Delay(sendDelay).ContinueWith(t => node.ReceiveJoinReply(jr));
                 }
                 
             }
@@ -127,7 +129,7 @@ namespace RoutingSimulator
         {
             Console.WriteLine("---------");
             this.Sequence++;
-            Console.WriteLine("JQ sequence " + this.Sequence);
+            Console.WriteLine(this.Name + " transmitting JQ");
 
             foreach (var node in this.ConnectedNodes)
             {
@@ -159,32 +161,48 @@ namespace RoutingSimulator
         {
             if (pack == null)
             {
+                Console.WriteLine("------------");
                 pack = new Packet();
             }
+
+            packetCache.Add(pack);
+
+            Console.WriteLine(this.Name + " transmitting packet");
+
             foreach (var node in this.ConnectedNodes)
             {
 
-                Console.WriteLine("Packet sending from " + this.Name);
-
                 node.ReceivePacket(pack);
-
-                
             }
             
         }
 
         public void ReceivePacket(Packet pack)
         {
-            //visual.SendPacket(this, sendDelay);
+            foreach (var packet in packetCache)
+            {
+                if (pack == packet)
+                {
+                    Console.WriteLine(this.Name + " received duplicate packet");
+                    return;
+                }
+            }
+
             if (this.Receiver)
             {
-                Console.WriteLine("Receiver " + this.Name + " received packet");
+                Console.WriteLine("Receiver " + this.Name + "  received packet");
             }
+            else
+            {
+                Console.WriteLine(this.Name + " received packet");
+            }
+
             if (this.FG_FLAG)
             {
                 Task.Delay(sendDelay + 300).ContinueWith(t => this.SendPacket(pack));
                 //SendPacket();
             }
+            
         }
     }
 }

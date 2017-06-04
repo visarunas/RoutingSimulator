@@ -49,6 +49,7 @@ namespace RoutingSimulator
 
         private void panelContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            graphicsController.connectionCheckEnabled = true;
 
             if (e.ClickedItem.Text == "Add Node")
             {
@@ -84,12 +85,19 @@ namespace RoutingSimulator
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
+            graphicsController.connectionCheckEnabled = false;
             try
             {
                 nodeController.Reset();
                 foreach(NodePictureBox pb in panelGraphics.Controls)
                 {
                     pb.Image = Image.FromFile(Properties.Resources.NodeImage);
+                }
+
+                foreach (var selection in checkedListBoxReceiver.CheckedItems)
+                {
+                    var receiver = nodeController.nodes.Find(x => x.Name == selection.ToString());
+                    receiver.Receiver = true;
                 }
 
                 var node = nodeController.nodes.Find(x => x.Name == (string)comboBoxSender.SelectedItem);
@@ -109,6 +117,7 @@ namespace RoutingSimulator
 
         public void NodePictureBox_MouseDown(object sender, MouseEventArgs e)
         {
+            graphicsController.connectionCheckEnabled = true;
             NodePictureBox node = sender as NodePictureBox;
 
             dataGridViewTable.Rows.Clear();
@@ -132,16 +141,20 @@ namespace RoutingSimulator
 
         private void buttonCheckConnections_Click(object sender, EventArgs e)
         {
-            graphicsController.CheckConnection();
+            graphicsController.connectionCheckEnabled = true;
         }
 
         private void buttonSendPacket_Click(object sender, EventArgs e)
         {
+            graphicsController.connectionCheckEnabled = false;
+            nodeController.ResetReceivers();
+
             foreach (var selection in checkedListBoxReceiver.CheckedItems)
             {
                 var receiver = nodeController.nodes.Find(x => x.Name == selection.ToString());
                 receiver.Receiver = true;
             }
+
 
             var node = nodeController.nodes.Find(x => x.Name == (string)comboBoxSender.SelectedItem);
 
