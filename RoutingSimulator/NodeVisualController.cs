@@ -166,9 +166,58 @@ namespace RoutingSimulator
             }
         }
 
+        public bool IsNodeConnectedTo(NodePictureBox pb, NodePictureBox nextPb)
+        {
+            for (int i = 0; i < edgeList.Count; i++)
+            {
+                if (edgeList[i].End == pb && edgeList[i].Start == nextPb || edgeList[i].Start == pb && edgeList[i].End == nextPb)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void CheckConnection()
+        {
+            edgeList.Clear();
+            foreach(NodePictureBox pb in panelGraphics.Controls)
+            {
+                pb.node.ConnectedNodes.Clear();
+            }
+
+            foreach(NodePictureBox pb in panelGraphics.Controls)
+            {
+                foreach(NodePictureBox nextPb in panelGraphics.Controls)
+                {
+                    if (pb != nextPb)
+                    {
+                        if (!IsNodeConnectedTo(pb, nextPb))
+                        {
+                            int x = pb.Location.X - nextPb.Location.X;
+                            int y = pb.Location.Y - nextPb.Location.Y;
+                            if (x < 200 && x > -200)
+                            {
+                                //Console.WriteLine(pb.Location.X - nextPb.Location.X);
+                                if (y < 200 && y > -200)
+                                {
+                                    LinkNodes(pb, nextPb);
+                                }
+
+                            }
+                        }
+                        
+                    }
+                }
+                pb.Refresh();
+            }
+            panelGraphics.Refresh();
+
+        }
 
         private void panelGraphics_Paint(object sender, PaintEventArgs e)
         {
+            
 
             using (var pen = new Pen(Color.Red, 4))
             {

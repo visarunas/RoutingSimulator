@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.panelGraphics = new System.Windows.Forms.Panel();
+            this.panelGraphics = new RoutingSimulator.DoubleBufferedPanel();
             this.panelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,6 +39,8 @@
             this.dataGridViewTable = new System.Windows.Forms.DataGridView();
             this.Destination = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NextNode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonCheckConnections = new System.Windows.Forms.Button();
+            this.buttonSendPacket = new System.Windows.Forms.Button();
             this.panelContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTable)).BeginInit();
             this.SuspendLayout();
@@ -86,11 +88,11 @@
             // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(168, 161);
+            this.buttonSend.Location = new System.Drawing.Point(191, 161);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(75, 23);
+            this.buttonSend.Size = new System.Drawing.Size(100, 23);
             this.buttonSend.TabIndex = 4;
-            this.buttonSend.Text = "Start";
+            this.buttonSend.Text = "Start Join Query";
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
@@ -129,11 +131,32 @@
             this.NextNode.Name = "NextNode";
             this.NextNode.ReadOnly = true;
             // 
+            // buttonCheckConnections
+            // 
+            this.buttonCheckConnections.Location = new System.Drawing.Point(28, 161);
+            this.buttonCheckConnections.Name = "buttonCheckConnections";
+            this.buttonCheckConnections.Size = new System.Drawing.Size(105, 23);
+            this.buttonCheckConnections.TabIndex = 8;
+            this.buttonCheckConnections.Text = "checkConnections";
+            this.buttonCheckConnections.UseVisualStyleBackColor = true;
+            this.buttonCheckConnections.Click += new System.EventHandler(this.buttonCheckConnections_Click);
+            // 
+            // buttonSendPacket
+            // 
+            this.buttonSendPacket.Location = new System.Drawing.Point(355, 161);
+            this.buttonSendPacket.Name = "buttonSendPacket";
+            this.buttonSendPacket.Size = new System.Drawing.Size(98, 23);
+            this.buttonSendPacket.TabIndex = 9;
+            this.buttonSendPacket.Text = "Send Packet";
+            this.buttonSendPacket.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1097, 654);
+            this.Controls.Add(this.buttonSendPacket);
+            this.Controls.Add(this.buttonCheckConnections);
             this.Controls.Add(this.dataGridViewTable);
             this.Controls.Add(this.comboBoxSender);
             this.Controls.Add(this.buttonSend);
@@ -148,8 +171,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelGraphics;
         private System.Windows.Forms.ContextMenuStrip panelContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addNodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeNodeToolStripMenuItem;
@@ -159,6 +180,9 @@
         private System.Windows.Forms.DataGridView dataGridViewTable;
         private System.Windows.Forms.DataGridViewTextBoxColumn Destination;
         private System.Windows.Forms.DataGridViewTextBoxColumn NextNode;
+        private System.Windows.Forms.Button buttonCheckConnections;
+        private DoubleBufferedPanel panelGraphics;
+        private System.Windows.Forms.Button buttonSendPacket;
     }
 }
 

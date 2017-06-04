@@ -21,6 +21,7 @@ namespace RoutingSimulator
 
         public string Name { get; set; }
         public bool Receiver { get; set; } = false;
+        public int Sequence = 0;
         public bool FG_FLAG = false;
 
         public List<JoinQuery> messageCache = new List<JoinQuery>();
@@ -29,15 +30,16 @@ namespace RoutingSimulator
 
         public void ReceiveJoinQuery(JoinQuery joinQuery)
         {
-            Console.WriteLine(joinQuery.LastHop + " > " + this.Name + " JQ");
-
             foreach(var jq in messageCache)
             {
-                if (jq.Source == joinQuery.Source)
+                if (jq.Source == joinQuery.Source && jq.Sequence >= joinQuery.Sequence)
                 {
+                    Console.WriteLine(joinQuery.LastHop + " > " + this.Name + " JQ duplicate = Dropped");
                     return;
                 }
             }
+            Console.WriteLine(joinQuery.LastHop + " > " + this.Name + " JQ");
+
             messageCache.Add(joinQuery);
             UpdateTable(joinQuery);
 
@@ -72,7 +74,7 @@ namespace RoutingSimulator
             if (this.Name == reply.Source)
             {
                 Console.WriteLine("Source received JR");
-                Task.Delay(sendDelay + 1300).ContinueWith(t => this.SendPacket(null));
+                //Task.Delay(sendDelay + 1300).ContinueWith(t => this.SendPacket(null));
                 //this.SendPacket(null);
                 return;
             }
@@ -104,10 +106,7 @@ namespace RoutingSimulator
 
             foreach (var node in this.ConnectedNodes)
             {
-                if (node.Name != receivedJoinQuery.Source && node.Name != receivedJoinQuery.LastHop)
-                {
-                    node.ReceiveJoinQuery(jq);
-                }
+                node.ReceiveJoinQuery(jq);
                 
             }
 
@@ -116,16 +115,26 @@ namespace RoutingSimulator
         public void SendJoinQuery()
         {
             Console.WriteLine("---------");
+            this.Sequence++;
+            Console.WriteLine("JQ sequence " + this.Sequence);
+
             foreach (var node in this.ConnectedNodes)
             {
-                node.ReceiveJoinQuery(new JoinQuery(this));
-                //visual.SendPacket(this, node, sendDelay);
+                var jq = new JoinQuery(this, this.Sequence);
+                node.ReceiveJoinQuery(jq);
+
+                this.messageCache.Add(jq);
             }
 
         }
 
         public void UpdateTable(JoinQuery joinQuery)
         {
+            var previousRoutingEntry = routingTable.Find(x => x.Destination == joinQuery.Source);
+            if (previousRoutingEntry != null)
+            {
+                routingTable.Remove(previousRoutingEntry);
+            }
             var entry = new RoutingEntry()
             {
                 Destination = joinQuery.Source,
@@ -141,7 +150,7 @@ namespace RoutingSimulator
             {
                 if (sender != node)
                 {
-                    Console.WriteLine("Packet sending from " + this.Name + " to " + node.Name);
+                    Console.WriteLine("Packet sending from " + this.Name);
 
                     node.ReceivePacket(this);
                 }

@@ -30,6 +30,7 @@ namespace RoutingSimulator
             this.graphicsController = new NodeVisualController(this, panelGraphics);
             nodeController = new NodeController(graphicsController);
 
+
         }
 
         private void panelGraphics_MouseDown(object sender, MouseEventArgs e)
@@ -133,6 +134,11 @@ namespace RoutingSimulator
         private void dataGridViewTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void buttonCheckConnections_Click(object sender, EventArgs e)
+        {
+            graphicsController.CheckConnection();
         }
     }
 }

@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alphabet.cs" />
+    <Compile Include="DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="JoinReply.cs" />
     <Compile Include="RoutingEntry.cs" />
     <Compile Include="VisualEdge.cs" />
