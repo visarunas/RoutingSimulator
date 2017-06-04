@@ -92,12 +92,6 @@ namespace RoutingSimulator
                     pb.Image = Image.FromFile(Properties.Resources.NodeImage);
                 }
 
-                foreach(var selection in checkedListBoxReceiver.CheckedItems)
-                {
-                    var receiver = nodeController.nodes.Find(x => x.Name == selection.ToString());
-                    receiver.Receiver = true;
-                }
-
                 var node = nodeController.nodes.Find(x => x.Name == (string)comboBoxSender.SelectedItem);
                 
 
@@ -139,6 +133,19 @@ namespace RoutingSimulator
         private void buttonCheckConnections_Click(object sender, EventArgs e)
         {
             graphicsController.CheckConnection();
+        }
+
+        private void buttonSendPacket_Click(object sender, EventArgs e)
+        {
+            foreach (var selection in checkedListBoxReceiver.CheckedItems)
+            {
+                var receiver = nodeController.nodes.Find(x => x.Name == selection.ToString());
+                receiver.Receiver = true;
+            }
+
+            var node = nodeController.nodes.Find(x => x.Name == (string)comboBoxSender.SelectedItem);
+
+            nodeController.SendPacket(node);
         }
     }
 }

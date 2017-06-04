@@ -149,6 +149,7 @@
             this.buttonSendPacket.TabIndex = 9;
             this.buttonSendPacket.Text = "Send Packet";
             this.buttonSendPacket.UseVisualStyleBackColor = true;
+            this.buttonSendPacket.Click += new System.EventHandler(this.buttonSendPacket_Click);
             // 
             // MainForm
             // 

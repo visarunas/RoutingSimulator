@@ -51,6 +51,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="JoinReply.cs" />
+    <Compile Include="Packet.cs" />
     <Compile Include="RoutingEntry.cs" />
     <Compile Include="VisualEdge.cs" />
     <Compile Include="JoinQuery.cs" />

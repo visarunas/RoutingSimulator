@@ -71,5 +71,10 @@ namespace RoutingSimulator
                 node.ConnectedNodes.Clear();
             }
         }
+
+        public void SendPacket(Node node)
+        {
+            node.SendPacket();
+        }
     }
 }
